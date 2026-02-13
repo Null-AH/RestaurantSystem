@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Interfaces;
-using Api.Data.DTOs.Table;
+using Api.Data.DTOs.TableDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

@@ -10,5 +10,6 @@ namespace Api.Core.Interfaces
     public interface IMenuRepository
     {
         public Task<List<CategoryDto>> GetFullMenuAsync();
+        public Task<MenuItemDto> GetItemByIdAsyn(int id);
     }
 }

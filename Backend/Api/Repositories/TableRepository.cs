@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Interfaces;
 using Api.Data;
-using Api.Data.DTOs.Table;
+using Api.Data.DTOs.TableDtos;
 using Api.Data.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -49,10 +49,12 @@ namespace Api.Repositories
         // }
 
 
-        // public Task<TableDto> GetTableByIdAsync(int id)
-        // {
-        //     throw new NotImplementedException();
-        // }
+        public async Task<TableDto> GetTableByIdAsync(int id)
+        {
+            var table = await _context.Tables.FindAsync(id);            
+            
+            return table.ToTableDto();
+        }
 
     }
 }

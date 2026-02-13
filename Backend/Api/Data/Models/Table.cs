@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Data.Enums;
 
 namespace Api.Data.Models
 {
     [Table("Tables")]
     public class Table
-    {
-        public enum TableStatus
-        {
-            Available,
-            Occupied,
-            Reserved
-        }
+    {        
         public int Id { get; set; }
         public int Number { get; set; }
         public int Capacity { get; set; }

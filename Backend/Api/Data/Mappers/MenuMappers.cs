@@ -14,6 +14,7 @@ namespace Api.Data.Mappers
         {
             return new CategoryDto
             {
+                Id = category.Id,
                 Name = category.Name,
                 Image = category.Image,
                 IsActive = category.IsActive,

@@ -1,4 +1,7 @@
+using Api.Core.Interfaces;
+using Api.Core.Services;
 using Api.Data;
+using Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +11,37 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Restaurant API", Version = "v1" });
+    
+    // 1. Define the Security Scheme
+    option.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
 
+    // 2. Add the Requirement
+    option.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 // Auth Services
 builder.Services.AddAuthentication(options =>
 {
@@ -34,10 +66,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositories & Services
-builder.Services.AddScoped<Api.Core.Interfaces.IAuthRepository, Api.Repositories.AuthRepository>();
-builder.Services.AddScoped<Api.Core.Interfaces.ITokenService, Api.Core.Services.TokenService>();
-builder.Services.AddScoped<Api.Core.Interfaces.IMenuRepository, Api.Repositories.MenuRepository>();
-builder.Services.AddScoped<Api.Core.Interfaces.ITableRepository, Api.Repositories.TableRepository>();
+builder.Services.AddScoped<IAuthRepository,AuthRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMenuRepository,MenuRepository>();
+builder.Services.AddScoped<ITableRepository,TableRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService,OrderService>();
+
 
 var app = builder.Build();
 

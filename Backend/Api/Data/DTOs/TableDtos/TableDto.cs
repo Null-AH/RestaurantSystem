@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Data.Enums;
 using static Api.Data.Models.Table;
 
-namespace Api.Data.DTOs.Table
+namespace Api.Data.DTOs.TableDtos
 {
     public class TableDto
     {

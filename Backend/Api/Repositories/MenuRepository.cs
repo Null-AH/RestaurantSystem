@@ -30,6 +30,12 @@ namespace Api.Repositories
             return menuDto;
         }
 
-
+        public async Task<MenuItemDto> GetItemByIdAsyn(int id)
+        {
+            var item = await _context.MenuItems.Include(i => i.MenuItemOptions)
+                .ThenInclude(o => o.MenuOption)
+                    .FirstOrDefaultAsync(i => i.Id == id);
+            return item.ToMenuItemDto();
+        }
     }
 }

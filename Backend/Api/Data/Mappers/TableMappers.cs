@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Data.DTOs.Table;
+using Api.Data.DTOs.TableDtos;
 using Api.Data.Models;
 
 namespace Api.Data.Mappers
